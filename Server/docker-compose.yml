@@ -5,7 +5,7 @@ services:
     build: 
       context: .
       dockerfile: Containerfile
-    container_name: CaptionGlasses
+    container_name: CaptionGlassesServer
     ports:
       - "2001:2001"
     environment:

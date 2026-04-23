@@ -41,7 +41,7 @@ if hasattr(huggingface_hub, "cached_download"):  # check and see if it was cache
 
 
 logger.info("Starting Patches for Torch Loading")
-_old_torch_load: function = torch.load
+_old_torch_load = torch.load
 
 
 def _patched_torch_load(*args, **kwargs):

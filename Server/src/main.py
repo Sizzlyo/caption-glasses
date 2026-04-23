@@ -7,7 +7,7 @@ from fastapi.responses import RedirectResponse
 import logging
 
 from core import patches
-from modules import classification, diarization, transcription
+from modules import diarization, transcription
 from api import endpoints
 
 from config import BASE_DIR
