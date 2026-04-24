@@ -1,6 +1,5 @@
 Caption Glasses are a pair of AR glasses that listen to your surroundings and display live captions directly in your field of view.
 
-This pro
 ## Captioning Process
 ***Below is a flowchart diagram of the captioning process***
 
