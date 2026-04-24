@@ -21,6 +21,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 
 WORKDIR /src
+
+COPY src/requirements.txt .
+
+# Run that back!
+RUN --mount=type=cache,target=/root/.cache/uv \ 
+    uv pip install --system \
+    torch torchvision torchaudio \
+    --index-url https://download.pytorch.org/whl/cu121 && \
+    uv pip install --system -r requirements.txt
+
 COPY src/ .
 COPY --from=docbuilder /docs/site /src/docs
 
