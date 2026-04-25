@@ -210,11 +210,10 @@ async def process_websocket_bytes(raw_bytes: bytes, websocket: WebSocketData) ->
                 s, sc = await loop.run_in_executor(
                     sound_executor, diarization.get_sounds, buf.flatten()
                 )
-                #sc is confidence level, only send if above threshold
-                if sc > 0.25 and s not in ["Silence", "Speech"]:    
-                    await websocket.connection.send_json({"type": "sound", "sound": s})
-            except Exception as e:
-                logger.debug("Error processing sound: %s", e)
+                if sc > 0.45 and s not in ["Silence", "Speech"]:    
+                    await websocket.connection.send_json({"type": "sound", "text": s})
+            except:
+                pass
 
         asyncio.create_task(ps(np.array(websocket.yamnet_buffer)))
 
