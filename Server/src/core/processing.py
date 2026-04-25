@@ -186,10 +186,17 @@ async def process_websocket_bytes(raw_bytes: bytes, websocket: WebSocketData) ->
         raw_bytes (bytes): The raw_bytes recieved through the websocket
         websocket (WebSocketData): The websocket connection object
     """
-
+    if not raw_bytes:
+        return
+    
     loop: asyncio.AbstractEventLoop = asyncio.get_running_loop()
-    audio_chunk: np.ndarray = np.frombuffer(raw_bytes, np.float32).copy()
 
+    #If incoming bytes are int16, convert to float32
+    #some clients might send int16 and thats how the app is set up right now
+    if len(raw_bytes) == 4096:
+        audio_chunk = np.frombuffer(raw_bytes, np.int16).astype(np.float32) / 32768.0
+    else:
+        audio_chunk = np.frombuffer(raw_bytes, np.float32).copy()
     loop.run_in_executor(
         diart_executor, diarization.audio_source.push_audio, audio_chunk.copy()
     )
