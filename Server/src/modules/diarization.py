@@ -5,6 +5,10 @@ from logging import Logger, getLogger
 from pyannote.core import Annotation, Segment
 
 import tensorflow as tf
+#this makes tensorflow use CPU only
+tf.config.set_visible_devices([], 'GPU')
+tf.config.optimizer.set_jit(False)
+
 import tensorflow_hub as hub
 
 from diart import SpeakerDiarization, SpeakerDiarizationConfig
