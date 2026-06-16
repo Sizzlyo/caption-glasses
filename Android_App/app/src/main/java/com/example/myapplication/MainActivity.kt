@@ -71,6 +71,8 @@ class MainActivity : ComponentActivity() {
     private var bluetoothPermissionsGranted = false
     private var bluetoothConnectionPermissionsGranted = false
     private var locationPermissionsGranted = false
+    private var textHeight = 12
+    private var textSize = 12
     lateinit var bluetoothGatt: BluetoothGatt
 
     lateinit var device: BluetoothDevice
@@ -145,6 +147,12 @@ class MainActivity : ComponentActivity() {
         val stopButton: Button = findViewById(R.id.button)
         val scanButton: Button = findViewById(R.id.button3)
         val reconnectButton: Button = findViewById(R.id.button4)
+        val heightUpButton: Button = findViewById(R.id.button5)
+        val heightDownButton: Button = findViewById(R.id.button6)
+        val sizeUpButton: Button = findViewById(R.id.button7)
+        val sizeDownButton: Button = findViewById(R.id.button8)
+        val heightText: TextView = findViewById(R.id.textView3)
+        val sizeText: TextView = findViewById(R.id.textView5)
 
         val client = OkHttpClient()
         val request = Request.Builder().url(listen_url).build()
@@ -200,16 +208,29 @@ class MainActivity : ComponentActivity() {
             println("Stopping...")
             stop(audioRecord)
             recordRoutine?.cancel()
-
         }
         scanButton.setOnClickListener { v ->
             scanLeDevice(leScanCallback, bluetoothLeScanner)
         }
-
         reconnectButton.setOnClickListener { v ->
             websocket = listen(client, request, listener)
         }
-
+        heightUpButton.setOnClickListener { v ->
+            textHeight += 1
+            heightText.text = textHeight.toString()
+        }
+        heightDownButton.setOnClickListener { v ->
+            textHeight -= 1
+            heightText.text = textHeight.toString()
+        }
+        sizeUpButton.setOnClickListener { v ->
+            textSize += 1
+            sizeText.text = textSize.toString()
+        }
+        sizeDownButton.setOnClickListener { v ->
+            textSize -= 1
+            sizeText.text = textSize.toString()
+        }
     }
 
     @RequiresPermission(Manifest.permission.BLUETOOTH_SCAN)
